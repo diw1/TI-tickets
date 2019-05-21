@@ -1,0 +1,15 @@
+{
+  "manifest_version": 2,
+  "name": "TI-tickets",
+  "version": "1.0",
+  "description": "TI-tickets",
+  "browser_action": {
+    "default_icon": "icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://detail.damai.cn/*"],
+      "js": ["script.js"]
+    }
+  ]
+}
