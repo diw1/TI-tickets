@@ -63,11 +63,11 @@ const grab = function(){
     fetch(url)
         .then((response) => response.json()) //assuming file contains json
         .then(item => {
-            console.log(item,'item')
+            console.log(item)
             console.log('###开始抢票###')
             addCode(item.code)
             console.log(`###选择场次:${item.series}###`)
-            document.getElementsByClassName('select_right_list_item')[Number(item.series)-1].click()
+            document.getElementsByClassName('select_right_list_item')[item.series-1].click()
             sleep(1000).then(()=>{
                 const button = document.getElementsByClassName('buybtn')[0]
                 if (button.textContent === "即将开抢") {
@@ -76,8 +76,17 @@ const grab = function(){
                         window.location.reload()
                     }, 1000)
                 }else{
-                    console.log('###跳转到确认订单页面###')
-                    document.getElementsByClassName('buybtn')[0].click()
+                    if (item.quantity===2){
+                        console.log('###增加一张票，选两张###')
+                        document.getElementsByClassName('cafe-c-input-number-handler-up')[0].click()
+                        sleep(300).then(()=>{
+                            console.log('###跳转到确认订单页面###')
+                            document.getElementsByClassName('buybtn')[0].click()
+                        })
+                    }else{
+                        console.log('###跳转到确认订单页面###')
+                        document.getElementsByClassName('buybtn')[0].click()
+                    }
                 }
                 sleep(1000).then(()=>{
                     if (document.title==="确认订单"){
